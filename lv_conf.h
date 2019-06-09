@@ -30,24 +30,24 @@
  *===================*/
 
 /* Horizontal and vertical resolution of the library.*/
-#define LV_HOR_RES          (320)
-#define LV_VER_RES          (240)
-#define LV_DPI              100
+#define LV_HOR_RES          (128)
+#define LV_VER_RES          (128)
+#define LV_DPI              120
 
 /* Size of VDB (Virtual Display Buffer: the internal graphics buffer).
  * Required for buffered drawing, opacity and anti-aliasing
  * VDB makes the double buffering, you don't need to deal with it!
  * Typical size: ~1/10 screen */
-#define LV_VDB_SIZE         (60 * LV_HOR_RES)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
+#define LV_VDB_SIZE         (128 * LV_HOR_RES)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
 #define LV_VDB_ADR          0                  /*Place VDB to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing (optional)
  * The flushing should use DMA to write the frame buffer in the background*/
-#define LV_VDB_DOUBLE       1       /*1: Enable the use of 2 VDBs*/
+#define LV_VDB_DOUBLE       0       /*1: Enable the use of 2 VDBs*/
 #define LV_VDB2_ADR         0       /*Place VDB2 to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Enable anti-aliasing (lines, and radiuses will be smoothed) */
-#define LV_ANTIALIAS        1       /*1: Enable anti-aliasing*/
+#define LV_ANTIALIAS        0       /*1: Enable anti-aliasing*/
 
 /*Screen refresh settings*/
 #define LV_REFR_PERIOD      50    /*Screen refresh period in milliseconds*/
@@ -66,8 +66,8 @@
 #define LV_INDEV_LONG_PRESS_REP_TIME    100                    /*Repeated trigger period in long press [ms] */
 
 /*Color settings*/
-#define LV_COLOR_DEPTH     16                     /*Color depth: 1/8/16/24*/
-#define LV_COLOR_16_SWAP   1                      /*Swap the 2 bytes of RGB565 color. Useful if the display has a 8 bit interface (e.g. SPI)*/
+#define LV_COLOR_DEPTH     1                     /*Color depth: 1/8/16/24*/
+#define LV_COLOR_16_SWAP   0                      /*Swap the 2 bytes of RGB565 color. Useful if the display has a 8 bit interface (e.g. SPI)*/
 #define LV_COLOR_TRANSP    LV_COLOR_LIME          /*Images pixels with this color will not be drawn (with chroma keying)*/
 
 /*Text settings*/
@@ -75,12 +75,12 @@
 #define LV_TXT_BREAK_CHARS     " ,.;:-_"         /*Can break texts on these chars*/
 
 /*Graphics feature usage*/
-#define USE_LV_ANIMATION        1               /*1: Enable all animations*/
-#define USE_LV_SHADOW           1               /*1: Enable shadows*/
+#define USE_LV_ANIMATION        0               /*1: Enable all animations*/
+#define USE_LV_SHADOW           0               /*1: Enable shadows*/
 #define USE_LV_GROUP            1               /*1: Enable object groups (for keyboards)*/
-#define USE_LV_GPU              1               /*1: Enable GPU interface*/
+#define USE_LV_GPU              0               /*1: Enable GPU interface*/
 #define USE_LV_REAL_DRAW        1               /*1: Enable function which draw directly to the frame buffer instead of VDB (required if LV_VDB_SIZE = 0)*/
-#define USE_LV_FILESYSTEM       1               /*1: Enable file system (required by images*/
+#define USE_LV_FILESYSTEM       0               /*1: Enable file system (required by images*/
 
 /*Compiler attributes*/
 #define LV_ATTRIBUTE_TICK_INC   IRAM_ATTR     /* Define a custom attribute to tick increment function */
@@ -93,7 +93,7 @@
 #define USE_LV_THEME_DEFAULT    0       /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define USE_LV_THEME_ALIEN      0       /*Dark futuristic theme*/
 #define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
-#define USE_LV_THEME_MONO       0       /*Mono color theme for monochrome displays*/
+#define USE_LV_THEME_MONO       1       /*Mono color theme for monochrome displays*/
 #define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows*/
 #define USE_LV_THEME_ZEN        0       /*Peaceful, mainly light theme */
 
@@ -104,17 +104,17 @@
 /* More info about fonts: https://littlevgl.com/basics#fonts
  * To enable a built-in font use 1,2,4 or 8 values
  * which will determine the bit-per-pixel */
-#define LV_FONT_DEFAULT        &lv_font_dejavu_20     /*Always set a default font from the built-in fonts*/
+#define LV_FONT_DEFAULT        &lv_font_dejavu_10     /*Always set a default font from the built-in fonts*/
 
-#define USE_LV_FONT_DEJAVU_10              0
+#define USE_LV_FONT_DEJAVU_10              4
 #define USE_LV_FONT_DEJAVU_10_LATIN_SUP    0
 #define USE_LV_FONT_DEJAVU_10_CYRILLIC     0
-#define USE_LV_FONT_SYMBOL_10              0
+#define USE_LV_FONT_SYMBOL_10              4
 
-#define USE_LV_FONT_DEJAVU_20              4
+#define USE_LV_FONT_DEJAVU_20              0
 #define USE_LV_FONT_DEJAVU_20_LATIN_SUP    0
 #define USE_LV_FONT_DEJAVU_20_CYRILLIC     0
-#define USE_LV_FONT_SYMBOL_20              4
+#define USE_LV_FONT_SYMBOL_20              0
 
 #define USE_LV_FONT_DEJAVU_30              0
 #define USE_LV_FONT_DEJAVU_30_LATIN_SUP    0
@@ -138,6 +138,13 @@
 /*
  * Documentation of the object types: https://littlevgl.com/object-types
  */
+ /*Preload (dependencies: lv_arc)*/
+#define USE_LV_PRELOAD      0
+#if USE_LV_PRELOAD != 0
+#  define LV_PRELOAD_DEF_ARC_LENGTH   60      /*[deg]*/
+#  define LV_PRELOAD_DEF_SPIN_TIME    1000    /*[ms]*/
+#  define LV_PRELOAD_DEF_ANIM         LV_PRELOAD_TYPE_SPINNING_ARC
+#endif
 
 /*****************
  * Simple object

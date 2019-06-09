@@ -4,3 +4,6 @@
 [submodule "lv_examples"]
 	path = lv_examples
 	url = https://github.com/littlevgl/lv_examples.git
+[submodule "components/ssd1306"]
+	path = components/ssd1306
+	url = https://github.com/lexus2k/ssd1306
